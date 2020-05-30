@@ -10,6 +10,7 @@ function getTasks(handler) {
         },
         error: function(error) {
             console.log(error);
+            handler([]);
         },
         dataType: 'json'
     });
