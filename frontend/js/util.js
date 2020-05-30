@@ -14,3 +14,11 @@ function getCurrentDate() {
     today = dd + '-' + mm + '-' + yyyy;
     return today;
 }
+
+function matches(obj, source, keylist=false) {
+    if (keylist) {
+        return keylist.every(key => obj.hasOwnProperty(key) && obj[key] === source[key]);
+    } else {
+        return Object.keys(source).every(key => obj.hasOwnProperty(key) && String(obj[key]) === String(source[key]));
+    }
+}
