@@ -64,6 +64,11 @@
         <!-- TASK LIST STARTS -->
         <div class="container-fluid mt-5 mb-5">
             <div id="tasks-div">
+                <div class="container" id="spinner-container" style="text-align: center; height: 20em; padding-top: 10%;">
+                    <div class="spinner-border text-primary m-4" style="width: 5rem; height: 5rem;" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
                 <!-- TASKS WILL BE APPENDED HERE -->
             </div>
             <!-- TASK LIST ENDS -->
@@ -151,11 +156,11 @@
 
 
     <!-- EDIT TASK MODAL STARTS -->
-    <div class="modal fade" id="editTask" tabindex="-1" role="dialog" aria-labelledby="newTaskModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editTask" tabindex="-1" role="dialog" aria-labelledby="editTaskModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="newTaskModalLabel">Add new task</h5>
+                    <h5 class="modal-title" id="editTaskModalLabel">Edit new task</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -163,23 +168,23 @@
                 <div class="modal-body">
                     <div id="newTaskForm">
                         <div class="form-group">
-                            <label for="newTaskTitle">Title</label>
-                            <input type="text" class="form-control" id="newTaskTitle" placeholder="Task Title (required)">
+                            <label for="editTaskTitle">Title</label>
+                            <input type="text" class="form-control" id="editTaskTitle" placeholder="Task Title (required)">
                         </div>
                         <div class="form-group">
-                            <label for="newTaskDesc">Description</label>
-                            <textarea class="form-control" id="newTaskDesc" placeholder="Task Description (optional)"></textarea>
+                            <label for="editTaskDesc">Description</label>
+                            <textarea class="form-control" id="editTaskDesc" placeholder="Task Description (optional)"></textarea>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="newTaskDate">Due Date</label>
-                                <input type="date" class="form-control" id="newTaskDate">
+                                <label for="editTaskDate">Due Date</label>
+                                <input type="date" class="form-control" id="editTaskDate">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-5">
-                                <label for="newTaskStatus">Status</label>
-                                <select id="newTaskStatus" class="form-control">
+                                <label for="editTaskStatus">Status</label>
+                                <select id="editTaskStatus" class="form-control">
                                     <option selected disabled>Choose</option>
                                     <option value="completed">Completed</option>
                                     <option value="in_progress">In Progress</option>
@@ -187,11 +192,11 @@
                                 </select>
                             </div>                            
                             <div class="form-group col-md-7">
-                                <label for="newTaskTags">
+                                <label for="editTaskTags">
                                     Label
                                     <small class="text text-muted ml-3">Select multiple using 'CTRL' key</small>
                                 </label>
-                                <select id="newTaskTags" class="form-control" multiple>
+                                <select id="editTaskTags" class="form-control" multiple>
                                     <option selected disabled>Choose</option>
                                     <option value="personal">Personal</option>
                                     <option value="work">Work</option>
@@ -204,7 +209,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="addNewTask">Submit</button>
+                    <button type="button" class="btn btn-primary" id="updateTask" onclick="handleEditTask(event, this);">Submit</button>
                 </div>
             </div>
         </div>
