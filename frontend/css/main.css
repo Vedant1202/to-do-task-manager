@@ -1,0 +1,13 @@
+body {
+    scroll-behavior: smooth;
+    padding-bottom: 10em;
+}
+
+.badge-purple {
+    background-color: #72548f;
+    color: white;
+}
+
+#navbar-main {
+    background-color: white;
+}
