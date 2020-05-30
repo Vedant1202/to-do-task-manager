@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // import required packages
 const express = require('express');
 const log = require('morgan')('dev');
@@ -29,14 +30,14 @@ app.use(bodyParserURLEncoded);
 
 // Error handling
 app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS, POST, PUT, DELETE');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Access-Control-Allow-Origin, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization'
-  );
-  next();
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS, POST, PUT, DELETE');
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'Access-Control-Allow-Origin, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization'
+    );
+    next();
 });
 
 // use express router
@@ -46,6 +47,7 @@ app.use('/api', router);
 tasksRoutes(router);
 
 // intialise server
+// eslint-disable-next-line no-unused-vars
 app.listen(properties.PORT, (req, res) => {
-  console.log(`Server is running on ${properties.PORT} port.`);
+    console.log(`Server is running on ${properties.PORT} port.`);
 });
