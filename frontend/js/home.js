@@ -1,84 +1,12 @@
-var tasks = '';
+var tasks;
+var searchTasks;
 
 $(document).ready(function() {
-
-
     getTasks((data) => { 
         $('#spinner-container').html('');
-        var colorAttr = '';
-        var iconAttr = '';
-        var tasksDiv = $('#tasks-div');
-        
         if (data.tasks && data.tasks.length > 0) {
             tasks = data.tasks; 
-            tasksDiv.html('');
-        
-            tasks.forEach(task => {
-                if (task.status === "new") {
-                    colorAttr = "success";
-                    iconAttr = "gift"
-                } else if (task.status === "in_progress") {
-                    colorAttr = 'warning';
-                    iconAttr = "clock"
-                } else {
-                    colorAttr = 'dark';
-                    iconAttr = "check-circle"
-                }
-                tasksDiv.append(
-                    `
-                        <div class="card mb-4">
-                            <div class="bg-${colorAttr} text-white card-header">
-                                <div class="row">
-                                    <div class="col-8">
-                                        ${capitalizeFirstLetter(task.status.replace('_', ' '))} <i class="fas fa-${iconAttr}"></i>
-                                    </div>
-                                    <div class="col-4 text-right">
-                                        <button data-id="${task._id}" class="btn btn-info btn-sm mr-4" onclick="openEditTaskModal(event, this);">
-                                            Edit
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button data-id="${task._id}" class="btn btn-danger btn-sm" onclick="handleDeleteTask(event, this);">
-                                            Remove
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <h4 class="card-title">
-                                            ${capitalizeFirstLetter(task.title)}
-                                        </h4>
-                                    </div>
-                                    <div class="col-6 text-right">
-                                        <h5><span class="badge badge-secondary">Due Date: ${task.dueDate}</span></h5>
-                                    </div>
-                                </div>
-                                <p class="card-text">
-                                    <br>
-                                    ${task.description ? capitalizeFirstLetter(task.description) : `<i class="text text-muted">No description given</i>`}
-                                </p>
-                            </div>
-                            <div class="card-footer text-muted">
-                                <div class="row">
-                                    <div class="col-3">
-                                        Added on ${task.addedOn}
-                                    </div>
-                                    <div class="col-9 text-right">
-                                        ${
-                                            task.tags.map((tag) => `
-                                                <span class="badge badge-purple mr-2">${tag}</span>
-                                            `).join('')
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `
-                );
-                
-            });
+            appendTasks(tasks);
         } else {
             $('#spinner-container').html(`
                 <h3 class="text text-muted">
@@ -88,6 +16,83 @@ $(document).ready(function() {
         }
     });
 });
+
+function appendTasks(arrayOfTasks) {
+    var colorAttr = '';
+    var iconAttr = '';
+    var tasksDiv = $('#tasks-div');
+    
+    tasksDiv.html('');
+
+        
+
+    arrayOfTasks.forEach(task => {
+        if (task.status === "new") {
+            colorAttr = "success";
+            iconAttr = "gift"
+        } else if (task.status === "in_progress") {
+            colorAttr = 'warning';
+            iconAttr = "clock"
+        } else {
+            colorAttr = 'dark';
+            iconAttr = "check-circle"
+        }
+        tasksDiv.append(
+            `
+                <div class="card mb-4">
+                    <div class="bg-${colorAttr} text-white card-header">
+                        <div class="row">
+                            <div class="col-8">
+                                ${capitalizeFirstLetter(task.status.replace('_', ' '))} <i class="fas fa-${iconAttr}"></i>
+                            </div>
+                            <div class="col-4 text-right">
+                                <button data-id="${task._id}" class="btn btn-info btn-sm mr-4" onclick="openEditTaskModal(event, this);">
+                                    Edit
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button data-id="${task._id}" class="btn btn-danger btn-sm" onclick="handleDeleteTask(event, this);">
+                                    Remove
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4 class="card-title">
+                                    ${capitalizeFirstLetter(task.title)}
+                                </h4>
+                            </div>
+                            <div class="col-6 text-right">
+                                <h5><span class="badge badge-secondary">Due Date: ${task.dueDate}</span></h5>
+                            </div>
+                        </div>
+                        <p class="card-text">
+                            <br>
+                            ${task.description ? capitalizeFirstLetter(task.description) : `<i class="text text-muted">No description given</i>`}
+                        </p>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <div class="row">
+                            <div class="col-3">
+                                Added on ${task.addedOn}
+                            </div>
+                            <div class="col-9 text-right">
+                                ${
+                                    task.tags.map((tag) => `
+                                        <span class="badge badge-purple mr-2">${tag}</span>
+                                    `).join('')
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
+        );
+        
+    });
+}
 
 
 $('#addNewTask').click(function(e) {
@@ -176,6 +181,9 @@ function handleEditTask(event, elem) {
         if (!(matches(newData, prevData, ['_id', 'title', 'dueDate', 'status', 'addedOn']) && newData.tags.length === prevData.tags.length && newData.tags.sort().every(function(value, index) { return value === prevData.tags.sort()[index]}))) {
             updateTask(newData);
             $('#updateTask').removeData();
+        } else {
+            alert('No changes detected');
+            $('#editTask').modal('hide');
         }
     }
 };
@@ -190,3 +198,80 @@ function handleDeleteTask(event, elem) {
 };
 
 
+$('#searchTasks').keyup(function (e) {
+    if (e.keyCode == 13) {
+        searchTasks = [];
+        let keyArray = ['title', 'description'];
+        let resultArray = [];
+        let query = $(this).val().trim();
+
+        keyArray.forEach(function (key) {
+            resultArray = resultArray.concat(searchArrayOfObjects(tasks, query, key));
+        });
+
+        searchTasks = removeDuplicatesFromArray(resultArray);
+
+        if (searchTasks.length > 0) {
+            appendTasks(searchTasks);
+        } else {
+            $('#tasks-div').html(`
+                <div class="container" id="spinner-container" style="text-align: center; height: 20em; padding-top: 10%;">
+                    <h3 class="text text-muted">
+                        No tasks to show
+                    </h3>
+                </div>
+            `);
+        }
+    }
+});
+
+
+function toggleClass(elem, className) {
+    elem.classList.toggle(className);
+};
+
+function applyFilters(taskList, statusFilter, tagsFilter, sortFilter=false) {
+    var resultArray = [];
+
+    if (statusFilter.length > 0) {
+        statusFilter.forEach(function (status) {
+            resultArray = resultArray.concat(searchArrayOfObjects(taskList, status, 'status'));
+        });
+    }
+    if (tagsFilter.length > 0) {
+        tagsFilter.forEach(function (tag) {
+            resultArray = resultArray.concat(searchArrayForTags(taskList, tag));
+        });
+    }
+    if (!tagsFilter.length && !statusFilter.length) {
+        resultArray = taskList;
+    }
+
+    resultArray = removeDuplicatesFromArray(resultArray);
+    if (sortFilter) {
+        if (sortFilter == "dateAsc") {
+            resultArray.sort((a, b) => a.dueDate.localeCompare(b.dueDate));
+        } else {
+            resultArray.sort((a, b) => b.dueDate.localeCompare(a.dueDate));
+        }
+    }
+    
+    console.log(resultArray)
+    return resultArray;
+}
+
+$('#applyFilters').click(function(e) {
+    e.preventDefault();
+
+    var statusFilter = $('#filterStatus').val(),
+        tagsFilter = $('#filterTags').val(),
+        sortFilter = $('#filterSort').val();
+
+    if (statusFilter.length || tagsFilter.length || sortFilter) {
+        if (searchTasks && searchTasks.length > 0) {
+            appendTasks(applyFilters(searchTasks, statusFilter, tagsFilter, sortFilter));
+        } else {
+            appendTasks(applyFilters(tasks, statusFilter, tagsFilter, sortFilter));
+        }
+    }
+});

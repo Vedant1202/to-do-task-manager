@@ -46,19 +46,49 @@
                     </button>
                 </div>
                 <div class="col-2">
-                    <button class="btn btn-outline-primary btn-block">
+                    <button class="btn btn-outline-primary btn-block" onclick="toggleClass(this, 'active');" data-toggle="collapse" data-target="#filtersDiv" aria-expanded="false" aria-controls="filtersDiv">
                         Filters
                         <i class="ml-3 fas fa-filter"></i>
                     </button>
                 </div>
                 <div class="col-3">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="search" placeholder="Search">
-                      </div>
+                        <input type="text" class="form-control" id="searchTasks" placeholder="Search and Enter">
+                    </div>
                 </div>
-                <!-- <div class="col-1"></div> -->
             </div>
-            <!-- <hr> -->
+        </div>
+
+        <div class="container mb-3 mt-5 collapse" id="filtersDiv">
+            <div class="row">
+                <div class="form-group col-3">
+                    <select id="filterStatus" class="form-control" multiple>
+                        <option selected disabled>Status</option>
+                        <option value="completed">Completed</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="new">New</option>                        
+                    </select>
+                </div>
+                <div class="form-group col-3">
+                    <select id="filterTags" class="form-control" multiple>
+                        <option selected disabled>Tags</option>
+                        <option value="personal">Personal</option>
+                        <option value="work">Work</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="others">Others</option>
+                    </select>
+                </div>
+                <div class="form-group col-3">
+                    <select id="filterSort" class="form-control">
+                        <option selected disabled>Sort By</option>
+                        <option value="dateAsc">Due Date ascending</option>
+                        <option value="dateDesc">Due Date descending</option>
+                    </select>
+                </div>
+                <div class="form-group col-3">
+                    <button class="btn btn-primary btn-block" id="applyFilters">Apply Filters</button>
+                </div>
+            </div>
         </div>
 
         <!-- TASK LIST STARTS -->
@@ -76,21 +106,19 @@
     </div>
 
 
-    <div id="pgNumber" class="container">
+    <!-- <div id="pgNumber" class="container">
         <ul class="pagination justify-content-center">
             <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                <button class="page-link" id="prevPage">Previous</button>
             </li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item" aria-current="page">
-                <a class="page-link" href="#">2</a>
+            <li class="page-item active">
+                <button class="page-link">1</button>
             </li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
+            <li class="page-item disabled">
+                <button class="page-link"id="nextPage">Next</button>
             </li>
         </ul>
-    </div>
+    </div> -->
     
 
     <!-- ADD NEW TASK MODAL STARTS -->

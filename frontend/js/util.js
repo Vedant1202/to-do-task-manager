@@ -22,3 +22,16 @@ function matches(obj, source, keylist=false) {
         return Object.keys(source).every(key => obj.hasOwnProperty(key) && String(obj[key]) === String(source[key]));
     }
 }
+
+function searchArrayOfObjects(array, what, key) {
+    return array.filter(element => String(element[key]).toLowerCase().includes(what));
+}
+
+function searchArrayForTags(array, what, key='tags') {
+    return array.filter(element => element[key].includes(what));
+}
+
+function removeDuplicatesFromArray(array) {
+    return Array.from(new Set(array));
+}
+
