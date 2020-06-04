@@ -22,12 +22,20 @@ exports.createUser = function (req, res, next) {
                 res.json({
                     error: err,
                 });
+            } else {
+                const payload = {
+                    userId: result._id,
+                    email: result.email,
+                    password: result.password,
+                };
+
+                res.json({
+                    status: true,
+                    email: user.email,
+                    name: user.name,
+                    token: jwtHandler.sign(payload),
+                });
             }
-            user.password = hash;
-            res.json({
-                message: 'User registered successfully',
-                token: jwtHandler.sign(user),
-            });
         });
     });
 };

@@ -90,7 +90,7 @@ function appendTasks(arrayOfTasks) {
                             <div class="col-9 text-right">
                                 ${
                                     task.tags.map((tag) => `
-                                        <span class="badge badge-purple mr-2">${tag}</span>
+                                        <span class="badge badge-purple mr-2">${capitalizeFirstLetter(tag)}</span>
                                     `).join('')
                                 }
                             </div>
