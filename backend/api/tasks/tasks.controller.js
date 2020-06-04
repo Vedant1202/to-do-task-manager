@@ -12,8 +12,6 @@ exports.createTask = function (req, res, next) {
         addedBy: req.decoded.userId,
     };
 
-    console.log(task);
-
     Tasks.create(task, function (err, result) {
         if (err) {
             res.json({
@@ -24,7 +22,6 @@ exports.createTask = function (req, res, next) {
                 message: 'Task created successfully',
             });
         }
-
     });
 };
 
