@@ -1,7 +1,12 @@
 function getTasks(handler) {
+    var tokenString = "Bearer " + getData('user').token;
+
     $.ajax({
         type: "GET",
         url: apiUrl + 'task/get',
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', tokenString);
+        },
         success: function(data) {
             if (data) {
                 // console.log(data);   
@@ -17,9 +22,14 @@ function getTasks(handler) {
 }
 
 function createTask(data) {
+    var tokenString = "Bearer " + getData('user').token;
+
     $.ajax({
         type: "POST",
         url: apiUrl + 'task/create',
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', tokenString);
+        },
         data: data,
         success: function(data) {
             alert("Task created successfully");
@@ -34,9 +44,14 @@ function createTask(data) {
 }
 
 function updateTask(data) {
+    var tokenString = "Bearer " + getData('user').token;
+
     $.ajax({
         type: "PUT",
         url: apiUrl + 'task/update',
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', tokenString);
+        },
         data: data,
         success: function(data) {
             alert("Task updated successfully");
@@ -51,9 +66,14 @@ function updateTask(data) {
 }
 
 function deleteTask(data) {
+    var tokenString = "Bearer " + getData('user').token;
+
     $.ajax({
         type: "DELETE",
         url: apiUrl + 'task/remove',
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', tokenString);
+        },
         data: data,
         success: function(data) {
             alert("Task deleted successfully");

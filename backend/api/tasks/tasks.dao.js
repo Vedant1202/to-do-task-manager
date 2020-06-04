@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const tasksSchema = require('./tasks.model');
+const TaskSchema = require('./tasks.model');
 
-tasksSchema.statics = {
+TaskSchema.statics = {
     create(data, cb) {
         const task = new this(data);
         task.save(cb);
@@ -9,10 +9,6 @@ tasksSchema.statics = {
 
     get(query, cb) {
         this.find(query, cb).sort({ _id: -1 });
-    },
-
-    getByName(query, cb) {
-        this.find(query, cb);
     },
 
     update(query, updateData, cb) {
@@ -24,5 +20,5 @@ tasksSchema.statics = {
     },
 };
 
-const tasksModel = mongoose.model('Tasks', tasksSchema);
-module.exports = tasksModel;
+const TasksModel = mongoose.model('Tasks', TaskSchema);
+module.exports = TasksModel;

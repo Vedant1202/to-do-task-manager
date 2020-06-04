@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager | Login</title>
+    <link rel="icon" href="../resources/images/todo-icon.ico">
+
+    <!-- CSS LIBS -->
+    <link rel="stylesheet" href="../css/libs/normalize.min.css">
+    <link rel="stylesheet" href="../css/libs/bootstrap.min.css">
+
+
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="../css/login.css">
+
+    <!-- JS LIBS -->
+    <script src="../js/libs/jquery.min.js"></script>
+    <script src="../js/libs/bootstrap.min.js"></script>
+    <script src="../js/libs/popper.min.js"></script>
+    <script src="../js/libs/fa-all.min.js"></script>
+
+</head>
+<body>
+
+
+    <div id="formContainer">
+        
+        <div class="formLeft">
+            <img src="../resources/images/user-icon.png">
+        </div>
+        <div class="formRight">
+            <!-- Forgot password form -->
+            <!-- <form id="forgot" class="otherForm">
+                <header>
+                    <h1>Forgot Password</h1>
+                    <p>Seems like your password is missing</p>
+                </header>
+                <section>
+                    <label>
+                        <p>Email</p>
+                        <input type="email" placeholder=" ">
+                        <div class="border"></div>
+                    </label>
+                    <button type="submit">Send email</button>
+                </section>
+                <footer>
+                    <button type="button" class="forgotBtn">Back</button>
+                </footer>
+            </form> -->
+            
+            <!-- Login form -->
+            <form id="login" onsubmit="return false;">
+                <header style="margin-bottom: 10%;">
+                    <h1>Login</h1>
+                </header>
+                <section>
+                    <label>
+                        <p>Email</p>
+                        <input type="email" id="login-email" placeholder="Enter your email address">
+                        <div class="border"></div>
+                    </label>
+                    <label>
+                        <p>Password</p>
+                        <input type="password" id="login-password" placeholder="Enter your password">
+                        <div class="border"></div>
+                    </label>
+                    <button type="submit" id="login-submit">Login</button>
+                </section>
+                <footer>
+                    <!-- <button type="button" class="forgotBtn">Forgot password?</button> -->
+                    <button type="button" class="registerBtn">Need an account?</button>
+                </footer>
+            </form>
+            
+        <!-- Register form -->
+            <form id="register" class="otherForm" onsubmit="return false;">
+                <header style="margin-bottom: 10%;">
+                    <h1>Register</h1>
+                </header>
+                <section>
+                    <label>
+                        <p>Full Name</p>
+                        <input type="text" id="register-fullname" placeholder="Enter your full name">
+                        <div class="border"></div>
+                    </label>
+                    <label>
+                        <p>Email</p>
+                        <input type="email" id="register-email" placeholder="Enter your email address">
+                        <div class="border"></div>
+                    </label>
+                    <label>
+                        <p>Password</p>
+                        <input type="password" id="register-password" placeholder="Enter your password">
+                        <div class="border"></div>
+                    </label>
+                    <label>
+                        <p>Confirm Password</p>
+                        <input type="password" id="register-cpassword" placeholder="Confirm your password">
+                        <div class="border"></div>
+                    </label>
+                    <button type="submit" id="register-submit">Register</button>
+                </section>
+                <footer>
+                    <button type="button" class="registerBtn">Back</button>
+                </footer>
+            </form>
+        </div>
+        
+    </div>
+
+
+    <!-- CUSTOM JS -->
+    <script src="../js/util.js"></script>
+    <script src="../controller/auth.js"></script>
+    <script src="../js/login.js"></script>
+
+</body>
+</html>

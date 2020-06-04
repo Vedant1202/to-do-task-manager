@@ -1,7 +1,16 @@
 var tasks;
 var searchTasks;
 
+if (!checkData('user')) {
+    alert('Session expired. Please log in again.');
+    Nav.replace('login.html');
+}
+
 $(document).ready(function() {
+    $('#welcome').prepend(`
+        ${getData('user').name.split(' ').map(capitalizeFirstLetter).join(' ')}
+    `);
+
     getTasks((data) => { 
         $('#spinner-container').html('');
         if (data.tasks && data.tasks.length > 0) {
@@ -275,3 +284,19 @@ $('#applyFilters').click(function(e) {
         }
     }
 });
+
+$('#clearFilters').click(function (e) {
+    e.preventDefault();
+
+    $('#filterStatus').val('default');
+    $('#filterTags').val('default');
+    $('#filterSort').val('default');
+
+    appendTasks(tasks);
+})
+
+$('#logout').click(function (e) {
+    e.preventDefault();
+
+    logoutHandler();
+})

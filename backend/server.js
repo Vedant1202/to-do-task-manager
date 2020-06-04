@@ -8,8 +8,9 @@ const bodyParser = require('body-parser');
 const properties = require('./config/properties');
 const db = require('./config/database');
 
-// task routes
+// ========= Routes ============
 const tasksRoutes = require('./api/tasks/tasks.routes');
+const userRoutes = require('./api/users/users.routes');
 
 const app = express();
 
@@ -43,8 +44,9 @@ app.use(function (req, res, next) {
 // use express router
 app.use('/api', router);
 
-// call tasks routing
+// call routing
 tasksRoutes(router);
+userRoutes(router);
 
 // intialise server
 // eslint-disable-next-line no-unused-vars

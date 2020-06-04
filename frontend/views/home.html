@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Manager | Home</title>
+    <link rel="icon" href="../resources/images/todo-icon.ico">
 
     <!-- CSS LIBS -->
     <link rel="stylesheet" href="../css/libs/bootstrap.min.css">
@@ -29,6 +30,10 @@
             <!-- <img src="/docs/4.5/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy"> -->
             Task Management To-Do Application
         </a>
+        <span class="navbar-text" id="welcome">   
+            <!-- Welcome message will be appended here -->
+            <button id="logout" style="margin-left: 30px;" class="btn btn-outline-dark">Logout</button>
+        </span>
     </nav>
     <!-- NAVBAR ENDS -->
 
@@ -63,7 +68,7 @@
             <div class="row">
                 <div class="form-group col-3">
                     <select id="filterStatus" class="form-control" multiple>
-                        <option selected disabled>Status</option>
+                        <option value="default" selected disabled>Status</option>
                         <option value="completed">Completed</option>
                         <option value="in_progress">In Progress</option>
                         <option value="new">New</option>                        
@@ -71,7 +76,7 @@
                 </div>
                 <div class="form-group col-3">
                     <select id="filterTags" class="form-control" multiple>
-                        <option selected disabled>Tags</option>
+                        <option value="default" selected disabled>Tags</option>
                         <option value="personal">Personal</option>
                         <option value="work">Work</option>
                         <option value="shopping">Shopping</option>
@@ -80,13 +85,14 @@
                 </div>
                 <div class="form-group col-3">
                     <select id="filterSort" class="form-control">
-                        <option selected disabled>Sort By</option>
+                        <option value="default" selected disabled>Sort By</option>
                         <option value="dateAsc">Due Date ascending</option>
                         <option value="dateDesc">Due Date descending</option>
                     </select>
                 </div>
                 <div class="form-group col-3">
                     <button class="btn btn-primary btn-block" id="applyFilters">Apply Filters</button>
+                    <button class="btn btn-danger btn-block" id="clearFilters">Clear Filters</button>
                 </div>
             </div>
         </div>
@@ -249,6 +255,7 @@
     <!-- CUSTOM JS -->
     <script src="../js/util.js"></script>
     <script src="../controller/tasks.js"></script>
+    <script src="../controller/auth.js"></script>
     <script src="../js/home.js"></script>
 
 </body>

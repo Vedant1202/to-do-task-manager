@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-const tasksSchema = new Schema(
+const TaskSchema = new Schema(
     {
         title: {
             type: String,
@@ -35,10 +35,15 @@ const tasksSchema = new Schema(
             unique: false,
             required: true,
         },
+        addedBy: {
+            type: String,
+            unique: false,
+            required: true,
+        },
     },
     {
         timestamps: true,
     }
 );
 
-module.exports = tasksSchema;
+module.exports = TaskSchema;

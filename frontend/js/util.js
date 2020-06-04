@@ -35,3 +35,51 @@ function removeDuplicatesFromArray(array) {
     return Array.from(new Set(array));
 }
 
+function validateEmail(email) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+//Navigation functions
+var Nav = /** @class */ (function() {
+    function Nav() {}
+    Nav.assign = function(url) {
+        window.location.assign(url);
+    };
+    Nav.replace = function(url) {
+        window.location.replace(url);
+    };
+    Nav.back = function () {
+      window.history.back();
+    };
+    Nav.open = function(url) {
+        window.open(url, '_blank', 'location=no');
+    };
+    Nav.close = function() {
+        window.close();
+    };
+    return Nav;
+}());
+
+
+//Cache storage Functions
+function setData(cname, cvalue) {
+    window.localStorage.setItem(cname, JSON.stringify(cvalue));
+}
+
+function getData(cname) {
+    return JSON.parse(JSON.parse(window.localStorage.getItem(cname)));
+}
+
+function checkData(cname) {
+    var user = getData(cname);
+    if (user != null) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function deleteData(cname) {
+    window.localStorage.removeItem(cname);
+}
