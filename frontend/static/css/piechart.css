@@ -1,0 +1,80 @@
+html,
+body {
+  /* height: 100%; */
+  /* display: -webkit-box; */
+  /* display: flex; */
+}
+
+body {
+  /* background: -webkit-gradient(linear, left top, left bottom, from(#606c88), to(#3f4c6b)); */
+  /* background: linear-gradient(to bottom, #606c88 0%, #3f4c6b 100%); */
+  /* font-family: "Source Sans Pro", sans-serif; */
+}
+
+.pie {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  /* -webkit-filter: drop-shadow(0 2px 0px #333);
+          filter: drop-shadow(0 2px 0px #333); */
+}
+
+.data-path:hover {
+  cursor: pointer;
+}
+
+.data-text {
+  -webkit-transition: -webkit-transform 0.2s ease-in-out;
+  transition: -webkit-transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
+  fill: #000;
+}
+.data-text__value {
+  font-size: 6rem;
+  -webkit-transform: translateY(-0.5rem);
+          transform: translateY(-0.5rem);
+  opacity: 0;
+}
+.data-text__name {
+  font-size: 1.3rem;
+  -webkit-transform: translateY(0.5rem);
+          transform: translateY(0.5rem);
+  opacity: 0;
+}
+.data-text--show {
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+  -webkit-animation: fadeGraphTextIn 0.5s forwards;
+          animation: fadeGraphTextIn 0.5s forwards;
+}
+.data-text:hover {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.legend-text {
+  fill: #000;
+}
+
+@-webkit-keyframes fadeGraphTextIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeGraphTextIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

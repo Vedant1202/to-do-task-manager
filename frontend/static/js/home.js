@@ -1,50 +1,31 @@
-var tasks;
-var searchTasks;
+let tasks;
+let searchTasks;
+let completedTasksCount;
+let inProgressTasksCount;
+let newTasksCount;
 
 if (!checkData('user')) {
     alert('Session expired. Please log in again.');
     Nav.replace('login.html');
 }
 
-$(document).ready(function() {
-    $('#welcome').prepend(`
-        ${getData('user').name.split(' ').map(capitalizeFirstLetter).join(' ')}
-    `);
-
-    getTasks((data) => { 
-        $('#spinner-container').html('');
-        if (data.tasks && data.tasks.length > 0) {
-            tasks = data.tasks; 
-            appendTasks(tasks);
-        } else {
-            $('#spinner-container').html(`
-                <h3 class="text text-muted">
-                    No tasks to show
-                </h3>
-            `);
-        }
-    });
-});
-
 function appendTasks(arrayOfTasks) {
-    var colorAttr = '';
-    var iconAttr = '';
-    var tasksDiv = $('#tasks-div');
-    
+    let colorAttr = '';
+    let iconAttr = '';
+    const tasksDiv = $('#tasks-div');
+
     tasksDiv.html('');
 
-        
-
-    arrayOfTasks.forEach(task => {
-        if (task.status === "new") {
-            colorAttr = "success";
-            iconAttr = "gift"
-        } else if (task.status === "in_progress") {
+    arrayOfTasks.forEach((task) => {
+        if (task.status === 'new') {
+            colorAttr = 'success';
+            iconAttr = 'gift';
+        } else if (task.status === 'in_progress') {
             colorAttr = 'warning';
-            iconAttr = "clock"
+            iconAttr = 'clock';
         } else {
             colorAttr = 'dark';
-            iconAttr = "check-circle"
+            iconAttr = 'check-circle';
         }
         tasksDiv.append(
             `
@@ -55,11 +36,15 @@ function appendTasks(arrayOfTasks) {
                                 ${capitalizeFirstLetter(task.status.replace('_', ' '))} <i class="fas fa-${iconAttr}"></i>
                             </div>
                             <div class="col-4 text-right">
-                                <button data-id="${task._id}" class="btn btn-info btn-sm mr-4" onclick="openEditTaskModal(event, this);">
+                                <button data-id="${
+                                    task._id
+                                }" class="btn btn-info btn-sm mr-4" onclick="openEditTaskModal(event, this);">
                                     Edit
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button data-id="${task._id}" class="btn btn-danger btn-sm" onclick="handleDeleteTask(event, this);">
+                                <button data-id="${
+                                    task._id
+                                }" class="btn btn-danger btn-sm" onclick="handleDeleteTask(event, this);">
                                     Remove
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
@@ -79,7 +64,11 @@ function appendTasks(arrayOfTasks) {
                         </div>
                         <p class="card-text">
                             <br>
-                            ${task.description ? capitalizeFirstLetter(task.description) : `<i class="text text-muted">No description given</i>`}
+                            ${
+                                task.description
+                                    ? capitalizeFirstLetter(task.description)
+                                    : `<i class="text text-muted">No description given</i>`
+                            }
                         </p>
                     </div>
                     <div class="card-footer text-muted">
@@ -88,56 +77,94 @@ function appendTasks(arrayOfTasks) {
                                 Added on ${task.addedOn}
                             </div>
                             <div class="col-9 text-right">
-                                ${
-                                    task.tags.map((tag) => `
+                                ${task.tags
+                                    .map(
+                                        (tag) => `
                                         <span class="badge badge-purple mr-2">${capitalizeFirstLetter(tag)}</span>
-                                    `).join('')
-                                }
+                                    `
+                                    )
+                                    .join('')}
                             </div>
                         </div>
                     </div>
                 </div>
             `
         );
-        
     });
 }
 
+$(document).ready(function () {
+    $('#welcome').prepend(`
+        ${getData('user').name.split(' ').map(capitalizeFirstLetter).join(' ')}
+    `);
 
-$('#addNewTask').click(function(e) {
-    e.preventDefault();
-    var data;
+    getTasks((data) => {
+        $('#spinner-container').html('');
+        if (data.tasks && data.tasks.length > 0) {
+            tasks = data.tasks;
+            completedTasksCount = searchArrayOfObjects(tasks, 'completed', 'status').length;
+            inProgressTasksCount = searchArrayOfObjects(tasks, 'in_progress', 'status').length;
+            newTasksCount = searchArrayOfObjects(tasks, 'new', 'status').length;
 
-    if($('#newTaskDesc').val()) {
-        data = {
-            'title': $('#newTaskTitle').val().trim(),
-            'description': $('#newTaskDesc').val().trim(),
-            'dueDate': $('#newTaskDate').val().trim(),
-            'status': $('#newTaskStatus').val().trim(),
-            'tags': $('#newTaskTags').val(),
-            'addedOn': getCurrentDate()
+            $('#dashName').html(`${getData('user').name}`);
+            $('#dashEmail').html(`${getData('user').email}`);
+
+            $('#completedTasksCount').html(`${completedTasksCount}`);
+            $('#inProgressTasksCount').html(`${inProgressTasksCount}`);
+            $('#newTasksCount').html(`${newTasksCount}`);
+
+            const pieData = [
+                { name: 'Completed', value: completedTasksCount, color: '#6e6e6e' },
+                { name: 'In Progress', value: inProgressTasksCount, color: '#ff9900' },
+                { name: 'New', value: newTasksCount, color: '#22d10f' },
+            ];
+            bakeDonut(pieData);
+
+            appendTasks(tasks);
+        } else {
+            $('#spinner-container').html(`
+                <h3 class="text text-muted">
+                    No tasks to show
+                </h3>
+            `);
         }
+    });
+});
+
+$('#addNewTask').click(function (e) {
+    e.preventDefault();
+    let data;
+
+    if ($('#newTaskDesc').val()) {
+        data = {
+            title: $('#newTaskTitle').val().trim(),
+            description: $('#newTaskDesc').val().trim(),
+            dueDate: $('#newTaskDate').val().trim(),
+            status: $('#newTaskStatus').val().trim(),
+            tags: $('#newTaskTags').val(),
+            addedOn: getCurrentDate(),
+        };
     } else {
         data = {
-            'title': $('#newTaskTitle').val().trim(),
-            'dueDate': $('#newTaskDate').val().trim(),
-            'status': $('#newTaskStatus').val().trim(),
-            'tags': $('#newTaskTags').val(),
-            'addedOn': getCurrentDate()
-        }
+            title: $('#newTaskTitle').val().trim(),
+            dueDate: $('#newTaskDate').val().trim(),
+            status: $('#newTaskStatus').val().trim(),
+            tags: $('#newTaskTags').val(),
+            addedOn: getCurrentDate(),
+        };
     }
 
     createTask(data);
 });
 
-
 function openEditTaskModal(event, elem) {
     event.preventDefault();
-    var id = elem.dataset.id;
+    const { id } = elem.dataset;
     $('#editTask').modal('show');
 
-    var prevData = tasks.find(function(task) {
-        if(task._id === id) {
+    // eslint-disable-next-line array-callback-return
+    const prevData = tasks.find(function (task) {
+        if (task._id === id) {
             return task;
         }
     });
@@ -147,47 +174,52 @@ function openEditTaskModal(event, elem) {
     $('#editTaskDate').val(prevData.dueDate);
     $('#editTaskStatus').val(prevData.status);
     $('#editTaskTags').val(prevData.tags);
-    
+
     $('#updateTask').data().id = id;
     $('#updateTask').data().prevData = prevData;
 }
 
-
 function handleEditTask(event, elem) {
     event.preventDefault();
-    var id = $('#updateTask').data().id;
-    var prevData = $('#updateTask').data().prevData;
-    var newData;
+    const { id } = $('#updateTask').data();
+    const { prevData } = $('#updateTask').data();
+    let newData;
 
     console.log(prevData);
-    
+
     if (id) {
-        
-        if($('#editTaskDesc').val()) {
+        if ($('#editTaskDesc').val()) {
             newData = {
-                '_id': id,
-                'title': $('#editTaskTitle').val().trim(),
-                'description': $('#editTaskDesc').val().trim(),
-                'dueDate': $('#editTaskDate').val().trim(),
-                'status': $('#editTaskStatus').val(),
-                'tags': $('#editTaskTags').val(),
-                'addedOn': getCurrentDate()
-            }
+                _id: id,
+                title: $('#editTaskTitle').val().trim(),
+                description: $('#editTaskDesc').val().trim(),
+                dueDate: $('#editTaskDate').val().trim(),
+                status: $('#editTaskStatus').val(),
+                tags: $('#editTaskTags').val(),
+                addedOn: getCurrentDate(),
+            };
         } else {
             newData = {
-                '_id': id,
-                'title': $('#editTaskTitle').val().trim(),
-                'dueDate': $('#editTaskDate').val().trim(),
-                'status': $('#editTaskStatus').val(),
-                'tags': $('#editTaskTags').val(),
-                'addedOn': getCurrentDate()
-            }
+                _id: id,
+                title: $('#editTaskTitle').val().trim(),
+                dueDate: $('#editTaskDate').val().trim(),
+                status: $('#editTaskStatus').val(),
+                tags: $('#editTaskTags').val(),
+                addedOn: getCurrentDate(),
+            };
         }
-        
-        console.log(newData);
-        
 
-        if (!(matches(newData, prevData, ['_id', 'title', 'dueDate', 'status', 'addedOn']) && newData.tags.length === prevData.tags.length && newData.tags.sort().every(function(value, index) { return value === prevData.tags.sort()[index]}))) {
+        console.log(newData);
+
+        if (
+            !(
+                matches(newData, prevData, ['_id', 'title', 'dueDate', 'status', 'addedOn']) &&
+                newData.tags.length === prevData.tags.length &&
+                newData.tags.sort().every(function (value, index) {
+                    return value === prevData.tags.sort()[index];
+                })
+            )
+        ) {
             updateTask(newData);
             $('#updateTask').removeData();
         } else {
@@ -195,24 +227,24 @@ function handleEditTask(event, elem) {
             $('#editTask').modal('hide');
         }
     }
-};
+}
 
 function handleDeleteTask(event, elem) {
     event.preventDefault();
-    var data = {
-        '_id': elem.dataset.id,
+    const data = {
+        _id: elem.dataset.id,
     };
 
     deleteTask(data);
-};
-
+}
 
 $('#searchTasks').keyup(function (e) {
+    // eslint-disable-next-line eqeqeq
     if (e.keyCode == 13) {
         searchTasks = [];
-        let keyArray = ['title', 'description'];
+        const keyArray = ['title', 'description'];
         let resultArray = [];
-        let query = $(this).val().trim();
+        const query = $(this).val().trim();
 
         keyArray.forEach(function (key) {
             resultArray = resultArray.concat(searchArrayOfObjects(tasks, query, key));
@@ -234,13 +266,12 @@ $('#searchTasks').keyup(function (e) {
     }
 });
 
-
 function toggleClass(elem, className) {
     elem.classList.toggle(className);
-};
+}
 
-function applyFilters(taskList, statusFilter, tagsFilter, sortFilter=false) {
-    var resultArray = [];
+function applyFilters(taskList, statusFilter, tagsFilter, sortFilter = false) {
+    let resultArray = [];
 
     if (statusFilter.length > 0) {
         statusFilter.forEach(function (status) {
@@ -258,23 +289,23 @@ function applyFilters(taskList, statusFilter, tagsFilter, sortFilter=false) {
 
     resultArray = removeDuplicatesFromArray(resultArray);
     if (sortFilter) {
-        if (sortFilter == "dateAsc") {
+        if (sortFilter === 'dateAsc') {
             resultArray.sort((a, b) => a.dueDate.localeCompare(b.dueDate));
         } else {
             resultArray.sort((a, b) => b.dueDate.localeCompare(a.dueDate));
         }
     }
-    
-    console.log(resultArray)
+
+    console.log(resultArray);
     return resultArray;
 }
 
-$('#applyFilters').click(function(e) {
+$('#applyFilters').click(function (e) {
     e.preventDefault();
 
-    var statusFilter = $('#filterStatus').val(),
-        tagsFilter = $('#filterTags').val(),
-        sortFilter = $('#filterSort').val();
+    const statusFilter = $('#filterStatus').val();
+    const tagsFilter = $('#filterTags').val();
+    const sortFilter = $('#filterSort').val();
 
     if (statusFilter.length || tagsFilter.length || sortFilter) {
         if (searchTasks && searchTasks.length > 0) {
@@ -293,10 +324,10 @@ $('#clearFilters').click(function (e) {
     $('#filterSort').val('default');
 
     appendTasks(tasks);
-})
+});
 
 $('#logout').click(function (e) {
     e.preventDefault();
 
     logoutHandler();
-})
+});

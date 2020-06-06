@@ -1,0 +1,33 @@
+{
+  "name": "to-do-task-manager_frontend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": "https://github.com/Vedant1202/to-do-task-manager.git",
+  "author": "Vedant Nandoskar <vedant.nandoskar@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "scripts": {
+    "start": "nodemon server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prettier": "prettier --check **/*.js",
+    "prettier:fix": "prettier --write **/*.js"
+  },
+  "devDependencies": {
+    "eslint": "^7.0.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^23.0.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-security": "^1.4.0",
+    "lint-staged": "^10.0.7",
+    "prettier": "^2.0.5"
+  },
+  "dependencies": {
+    "node-static": "^0.7.11"
+  }
+}
