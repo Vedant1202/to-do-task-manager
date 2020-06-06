@@ -1,8 +1,8 @@
 {
-  "name": "api",
+  "name": "to-do-task-manager_api",
   "version": "1.0.0",
   "main": "server.js",
-  "repository": "https://github.com/Vedant1202/ToDoApp.git",
+  "repository": "https://github.com/Vedant1202/to-do-task-manager.git",
   "author": "Vedant Nandoskar <vedant.nandoskar@gmail.com>",
   "license": "MIT",
   "private": false,
