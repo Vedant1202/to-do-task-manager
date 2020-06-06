@@ -33,7 +33,7 @@ You can choose to use [ssh-keygen](https://www.ssh.com/ssh/keygen/).
 - For all OS:
 You can use an online key pair generator like [this](https://travistidwell.com/jsencrypt/demo/).
 
-- After generating keys, copy the files in `backend/keys/`
+- After generating keys, name then as `public.key` and `private.key` and copy the files in `backend/keys/`
 
 To install backend dependencies
 
