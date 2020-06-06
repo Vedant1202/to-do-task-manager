@@ -50,6 +50,6 @@ userRoutes(router);
 
 // intialise server
 // eslint-disable-next-line no-unused-vars
-app.listen(properties.PORT, (req, res) => {
+app.listen(properties.PORT, properties.IP, (req, res) => {
     console.log(`Server is running on ${properties.PORT} port.`);
 });
