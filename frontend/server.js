@@ -1,13 +1,23 @@
-const http = require('http');
-const nodeStatic = require('node-static');
+const express = require('express');
 
-const file = new nodeStatic.Server('./static');
-const PORT = process.env.PORT || 8080;
+const app = express();
+const path = require('path');
 
-http.createServer(function (request, response) {
-    request
-        .addListener('end', function () {
-            file.serve(request, response);
-        })
-        .resume();
-}).listen(PORT);
+const PORT = process.env.PORT || 3000;
+const IP = process.env.IP || null;
+
+app.use(express.static('static'));
+
+app.get('/login', function (req, res) {
+    res.sendFile(path.join(__dirname, 'static/views/login.html'));
+});
+
+app.get('/home', function (req, res) {
+    res.sendFile(path.join(__dirname, 'static/views/home.html'));
+});
+
+app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'static/views/error.html'));
+});
+
+app.listen(PORT, IP, () => console.log('Server is running...'));
