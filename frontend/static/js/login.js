@@ -32,7 +32,7 @@ $('#login-submit').click(function (e) {
                 data,
                 function (successData) {
                     setData('user', JSON.stringify(successData));
-                    Nav.assign('home.html');
+                    Nav.assign('home');
                 },
                 function (error) {
                     alert(`Error: ${error.responseJSON.error}`);
@@ -76,7 +76,7 @@ $('#register-submit').click(function (e) {
                     function (successData) {
                         alert('Registration successful!');
                         setData('user', JSON.stringify(successData));
-                        Nav.assign('home.html');
+                        Nav.assign('home');
                     },
                     function (error) {
                         alert(`Error: ${error.responseJSON.error}`);

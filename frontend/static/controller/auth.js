@@ -18,7 +18,7 @@ function logoutHandler() {
         deleteData('user');
     }
     alert('You have been logged out.');
-    Nav.assign('login.html');
+    Nav.assign('login');
 }
 
 function signupHandler(data, successCallback, errorCallback) {

@@ -1,3 +1,4 @@
+/* eslint-disable no-var */
 let tasks;
 let searchTasks;
 let completedTasksCount;
@@ -6,7 +7,7 @@ let newTasksCount;
 
 if (!checkData('user')) {
     alert('Session expired. Please log in again.');
-    Nav.replace('login.html');
+    Nav.replace('login');
 }
 
 function appendTasks(arrayOfTasks) {
@@ -185,8 +186,6 @@ function handleEditTask(event, elem) {
     const { prevData } = $('#updateTask').data();
     let newData;
 
-    console.log(prevData);
-
     if (id) {
         if ($('#editTaskDesc').val()) {
             newData = {
@@ -208,8 +207,6 @@ function handleEditTask(event, elem) {
                 addedOn: getCurrentDate(),
             };
         }
-
-        console.log(newData);
 
         if (
             !(
@@ -296,7 +293,6 @@ function applyFilters(taskList, statusFilter, tagsFilter, sortFilter = false) {
         }
     }
 
-    console.log(resultArray);
     return resultArray;
 }
 
@@ -308,10 +304,34 @@ $('#applyFilters').click(function (e) {
     const sortFilter = $('#filterSort').val();
 
     if (statusFilter.length || tagsFilter.length || sortFilter) {
+        // eslint-disable-next-line vars-on-top
+        var filteredTaskList;
         if (searchTasks && searchTasks.length > 0) {
-            appendTasks(applyFilters(searchTasks, statusFilter, tagsFilter, sortFilter));
+            filteredTaskList = applyFilters(searchTasks, statusFilter, tagsFilter, sortFilter);
+            if (filteredTaskList.length > 0) {
+                appendTasks(filteredTaskList);
+            } else {
+                $('#tasks-div').html(`
+                <div class="container" id="spinner-container" style="text-align: center; height: 20em; padding-top: 10%;">
+                    <h3 class="text text-muted">
+                        No tasks to show
+                    </h3>
+                </div>
+            `);
+            }
         } else {
-            appendTasks(applyFilters(tasks, statusFilter, tagsFilter, sortFilter));
+            filteredTaskList = applyFilters(tasks, statusFilter, tagsFilter, sortFilter);
+            if (filteredTaskList.length > 0) {
+                appendTasks(filteredTaskList);
+            } else {
+                $('#tasks-div').html(`
+                <div class="container" id="spinner-container" style="text-align: center; height: 20em; padding-top: 10%;">
+                    <h3 class="text text-muted">
+                        No tasks to show
+                    </h3>
+                </div>
+            `);
+            }
         }
     }
 });
