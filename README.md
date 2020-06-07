@@ -5,7 +5,7 @@ Login sessions based on [JWT (JSON Web Token)](https://jwt.io/) authentication s
 
 ## Features
 
- - Frontend static file server based on [node-static](https://www.npmjs.com/package/node-static)
+ - Frontend static file server based on [express](https://expressjs.com/)
  - Server API based on [node.js](https://nodejs.org/en/) and [express.js](https://expressjs.com/)
  - Database based on [MongoDB](https://www.mongodb.com/) and accessed through [mongoose](https://mongoosejs.com/)
  - JWT based authentication based on [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
@@ -104,7 +104,7 @@ cd frontend
 npm start
 ```
 
- - Go to `http://localhost:8080/views/login.html`
+ - Go to `http://localhost:3000/login`
 
 
 ## Contributing
