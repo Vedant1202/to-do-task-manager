@@ -12,7 +12,7 @@ Login sessions based on [JWT (JSON Web Token)](https://jwt.io/) authentication s
  - Database based on [MongoDB](https://www.mongodb.com/) and accessed through [mongoose](https://mongoosejs.com/)
  - JWT based authentication based on [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
  - Server monitoring based on [nodemon](https://nodemon.io/)
- - Code linting and styling based on [esline](https://eslint.org/) and [prettier](https://prettier.io/)
+ - Code linting and styling based on [eslint](https://eslint.org/) and [prettier](https://prettier.io/)
 
 ## Installation
 
