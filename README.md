@@ -58,14 +58,14 @@ To install frontend dependencies
  - Using yarn
 
 ```bash
-cd backend
+cd frontend
 yarn install
 ```
 
  - Using npm
 
 ```bash
-cd backend
+cd frontend
 npm install
 ```
 
